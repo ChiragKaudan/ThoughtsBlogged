@@ -23,4 +23,4 @@ Kleinberg and Tardos spend so much inkspace talking about the history and motiva
 that the problem captures before formulating a mathematical problem that is solvable via an algorithm. Within the first 10 pages of the book, they emphasize 
 that the title of their book, and the subject we are studying, is algorithm **design** and that decision was not unintentional.
 
-But preachy pedagogy aside, the Stable Matching Problem and the Gale-Shapley Algorithm are perfect breeding 
+But preachy pedagogy aside, I could never have the either the prose or the knowledge of Kleinberg and Tardos (seriously, for a flat out **better** coverage of this algorithm, read the first 10 pages of their book!) so this blog post won't do such a pretty algorithm justice.
