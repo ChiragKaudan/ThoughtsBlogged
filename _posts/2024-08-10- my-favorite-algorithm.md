@@ -101,10 +101,11 @@ Here we show that there does exist a stable matching for any set of preference l
    - Notice I used the term "perfect matching" for the object, you should be asking yourself how we know this algorithm returns a perfect matching, it is not immediately obvious. In order for this algorithm to solve the problem we want it to solve, it should return a stable matching, which is even less immediately obvious to see. We will see resolutions to these questions shortly.
 
 We can take these bullet points and make a concrete algorithm with it, described below with psuedocode. It uses coding syntax that should follow naturally from the English language (like "if" and "while") and typical, intuitive indentation.
+
 ~~~
 Gale-Shapley Algorithm
 ________________________________________
-Initially, all m in M and w in W are free.
+Initially, all m \in M and w \in W are free.
 While there is a man m who is free and has not proposed to every woman
   Choose such a man m
   Let w be the highest-ranked woman in m's preference list to which m has not yet proposed
@@ -144,7 +145,9 @@ But we're getting ahead of ourselves, we have to show that the algorithm actuall
 {: .box-note}
 **Proposition 3:** The Gale-Shapley Algorithm terminates after at most $$n^2$$ iterations of the while loop.
 
-**Proof:** We're trying to upper bound the running time of an algorithm here, and one way we could do that is to find some measure of progress. We want a precise way of being able to say that each step taken by the algorithm brings it closer to termination. Each iteration of the while loop of our algorithm consists of a man proposing to a woman that he has never proposed to for the only time. If we let $$P(k)$$ be the number of pairs $$(m,w)$$ such that $$m$$ has proposed to $$w$$ by the end of iteration $$k$$, we see that $$P(k+1)$$ must be strictly greater than $$P(k)$$. But there are only $$n^2$$ pairs of men and women, so $$P$$ can only increase by at most $$n^2$$ over the course of the algorithm. Since every man and woman start off as free, $$P(0) = 0$$ and thus we know that after at most $$n^2$$ iterations the algorithm terminates.
+**Proof:** We're trying to upper bound the running time of an algorithm here, and one way we could do that is to find some measure of progress. We want a precise way of being able to say that each step taken by the algorithm brings it closer to termination. Each iteration of the while loop of our algorithm consists of a man proposing to a woman that he has never proposed to for the only time. If we let $$P(k)$$ be the number of pairs $$(m,w)$$ such that $$m$$ has proposed to $$w$$ by the end of iteration $$k$$, we see that $$P(k+1)$$ must be strictly greater than $$P(k)$$. But there are only $$n^2$$ pairs of men and women, so $$P$$ can only increase by at most $$n^2$$ over the course of the algorithm. Since every man and woman start off as free, $$P(0) = 0$$ and thus we know that after at most $$n^2$$ iterations the algorithm terminates. 
+
+$$\tag*{$\blacksquare$}$$
 
 **Proof commentary**: In the proof, $$m$$ and $$w$$ seen in the definition of $$P(k)$$ are not referring to specific men and women, we are considering all pairs of men and women in which the man has proposed to the woman by the end of the $$k$$th iteration. If, for example, we were considering a specific man $$m$$ then it is certainly not true that the value of $$P(k+1)$$ is always greater than the value of $$P(k)$$, since this would require a specific man to keep making proposals one iteration after the other and the man making the proposal on any given iteration is completely arbitrary. 
 
@@ -158,6 +161,8 @@ Next we establish that the set $$S$$ returned by the algorithm is indeed a perfe
 
 **Proof**: For contradiction, suppose at some point there exists a man $$m$$ who is free and has proposed to every woman. By observation 1, all women are thus currently engaged to some man. The set of engaged pairs forms a matching (by the previous paragraph) and there are $$n$$ women, so since in a matching nobody is allowed to have more than one partner, there must be at least $$n$$ engaged men. But there are only $$n$$ men total, and $$m$$ is free, so this is a contradiction.
 
+$$\tag*{$\blacksquare$}$$
+
 This proof might seem like overkill for such a simple idea but since this post contains my pedagogical opinions, dislpays the process of careful algorithm design and rigorous math, and is not written for a mathematical audience, it's important to be very careful. For example, for one of the previous paragraphs I could have simply said "Since we have a bipartite graph with parts $$U$$ and $$W$$ with | $$U$$ | = | $$W$$ |, it suffices to show that a matching saturates all of $$U$$", but that's neither instructive nor elucidating for certain audiences. This is a great way playground to start messing with combinatorial definitions and seeing how much precision needs to be involved.
 
 Now we can easily show that $$S$$ is a perfect matching.
@@ -166,6 +171,8 @@ Now we can easily show that $$S$$ is a perfect matching.
 **Proposition 5:** The returned set $$S$$ is a perfect matching. 
 
 **Proof:** The set of engaged pairs are always a matching. Suppose for contradiction that the algorithm returns with a free man $$m$$. $$m$$ must have proposed to every woman since this is required for termination given that $$m$$ is free, but this contradicts proposition 4 which states that there cannot exist a free man who has proposed to every woman. Thus the algorithm can never terminate with a free man and so the set of engaged pairs returned at termination, $$S$$, is a perfect matching.
+
+$$\tag*{$\blacksquare$}$$
 
 As stated above, we are eliminating the possibility of a free man at termination by squeezing the 2nd condition of while loop termination (the "if a man $$m$$ has proposed to every woman" part) by proving that if this happens, it must be the case that $$m$$ is also not free and therefore no free man escapes the algorithm. Which we then combine with the fact that the set of engaged pairs is always a matching to prove $$S$$ is a perfect matching. This precise progression of statements and observations are pretty neat when you slow down the pace and break it down as much as I have here (but probably infuriatingly slow for some readers).
 
@@ -182,6 +189,7 @@ Intuitively, no instability $$(m,w')$$ could exist with respect to $$S$$, becaus
 
 In the execution of the algorithm that leads to producing set $$S$$, the last proposal $$m$$ made must have been to $$w$$ by definition. But $$m$$ must have proposed to $$w'$$ before he proposed to $$w$$, since $$m$$ prefers $$w'$$ to $$w$$. Therefore, he must have been rejected by $$w'$$ in favor of some other man $$m''$$. Because $$w'$$ ended up with $$m'$$ as a final partner, either $$m'' = m'$$ or by observation 1, $$w'$$ prefers $$m'$$ over $$m''$$. In either case, we know $$w'$$ prefers $$m'$$ over $$m$$, because there are no ties allowed in rankings (our ranking for men and women is a strict totally ordered relation), which contradicts the assumption that $$w'$$ prefers $$m$$ over $$m'$$. It now follows that $$S$$ is a stable matching.
 
+$$\tag*{$\blacksquare$}$$ 
 
 ## Further Considerations
 We have just proven the big conclusion through a series of intermediate propositions and observations, but now we turn to some of the comments we made on those intermediate propositions themselves. They turn out to be just as interesting, if not more interesting, than this main theorem.
