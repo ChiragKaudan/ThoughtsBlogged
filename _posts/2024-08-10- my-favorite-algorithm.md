@@ -163,7 +163,7 @@ Next we establish that the set $$S$$ returned by the algorithm is indeed a perfe
 
 $$\tag*{$\blacksquare$}$$
 
-This proof might seem like overkill for such a simple idea but since this post contains my pedagogical opinions, dislpays the process of careful algorithm design and rigorous math, and is not written for a mathematical audience, it's important to be very careful. For example, for one of the previous paragraphs I could have simply said "Since we have a bipartite graph with parts $$U$$ and $$W$$ with | $$U$$ | = | $$W$$ |, it suffices to show that a matching saturates all of $$U$$", but that's neither instructive nor elucidating for certain audiences. This is a great way playground to start messing with combinatorial definitions and seeing how much precision needs to be involved.
+This proof might seem like overkill for such a simple idea but since this post contains my pedagogical opinions, dislpays the process of careful algorithm design and rigorous math, and is not written for a mathematical audience, it's important to be very careful. For example, for one of the previous paragraphs I could have simply said "Since we have a bipartite graph with equal sized parts $$U$$ and $$W$$, it suffices to show that a matching saturates all of $$U$$", but that's neither instructive nor elucidating for certain audiences. This is a great way playground to start messing with combinatorial definitions and seeing how much precision needs to be involved.
 
 Now we can easily show that $$S$$ is a perfect matching.
 
