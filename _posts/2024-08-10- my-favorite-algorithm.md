@@ -102,6 +102,8 @@ Here we show that there does exist a stable matching for any set of preference l
 
 We can take these bullet points and make a concrete algorithm with it, described below with psuedocode. It uses coding syntax that should follow naturally from the English language (like "if" and "while") and typical, intuitive indentation.
 ~~~
+Gale-Shapley Algorithm
+________________________________________
 Initially, all m in M and w in W are free.
 While there is a man m who is free and has not proposed to every woman
   Choose such a man m
@@ -120,10 +122,94 @@ ENDWHILE
 Return set S of engaged pairs
 ~~~
 
-Again, one should think carefully about whether the set $$S$$ returned by this algorithm is a stable matching. We prove this now using observations about the algorithm.
+Again, one should think carefully about whether the set $$S$$ returned by this algorithm is a stable matching. We prove this now using observations about the algorithm. One should also note that this algorithm is underspecified... we simply choose a free man $$m$$ that has not proposed to every woman yet somehow without specifying how. Therefore, different choices made characterize different executions of the Gale-Shapley algorithm, which is a good thing to keep in mind.
 
 ## Algorithm Analysis
 
+Consider an execution of this algorithm from the point of view of a woman $$w$$. She starts off free until some man $$m$$ proposes to her, at which point her and $$m$$ become engaged. Later on in the execution of the algorithm, some free man $$m'$$ comes along and proposes to $$w$$. There are only two possibilities here; one is that $$m'$$ remains free as $$w$$ prefers her current partner to $$m'$$ and the other is that $$m$$ becomes free, being ditched for a partner that $$w$$ prefers over $$m$$. In both cases, $$w$$ remains engaged and not only that, the ranking of the partners she becomes engaged to can only increase. Assuming she has already been proposed to at least once, the ranking of her partners never falls as she always remains engaged and always has the option to reject proposals from men that are lower rated than her current partner.
+
+{: .box-note}
+**Observation 1:** $$w$$ remains engaged from when she receives her first proposal and the sequence of her partners throughout the execution can only get better for her.
+
+This is certainly not true for the men. A man $$m$$ is free _until_ he proposes to the highest ranked woman on his list that he has not yet proposed to. He may or may not become engaged, this is up to the woman. As time passes, he may switch back and forth between being free and being engaged at a moment's notice. 
+{: .box-note}
+**Observation 2:** The sequence of women $$m$$ proposes to gets worse in terms of $$m$$'s preference list as time goes on.
+
+It seems like this situation sucks for the men and the women have a lot of power to pick and discard men given the information of proposals coming their way. Observation 1 is very comforting for a woman in this setup, as it intuitively seems like the longer you remain free in the run of the algorithm, the worse your potential partners get. We will come back to this seeming phenomenon of "unfairness", but by then we will have a more complete understanding and our intuition may not tell us the same thing! 
+
+But we're getting ahead of ourselves, we have to show that the algorithm actually terminates (pro-tip, very important!!). 
+{: .box-note}
+**Proposition 3:** The Gale-Shapley Algorithm terminates after at most $$n^2$$ iterations of the while loop.
+
+**Proof:** We're trying to upper bound the running time of an algorithm here, and one way we could do that is to find some measure of progress. We want a precise way of being able to say that each step taken by the algorithm brings it closer to termination. Each iteration of the while loop of our algorithm consists of a man proposing to a woman that he has never proposed to for the only time. If we let $$P(k)$$ be the number of pairs $$(m,w)$$ such that $$m$$ has proposed to $$w$$ by the end of iteration $$k$$, we see that $$P(k+1)$$ must be strictly greater than $$P(k)$$. But there are only $$n^2$$ pairs of men and women, so $$P$$ can only increase by at most $$n^2$$ over the course of the algorithm. Since every man and woman start off as free, $$P(0) = 0$$ and thus we know that after at most $$n^2$$ iterations the algorithm terminates.
+
+**Proof commentary**: In the proof, $$m$$ and $$w$$ seen in the definition of $$P(k)$$ are not referring to specific men and women, we are considering all pairs of men and women in which the man has proposed to the woman by the end of the $$k$$th iteration. If, for example, we were considering a specific man $$m$$ then it is certainly not true that the value of $$P(k+1)$$ is always greater than the value of $$P(k)$$, since this would require a specific man to keep making proposals one iteration after the other and the man making the proposal on any given iteration is not chosen by the algorithm, it is completely arbitrary. 
+
+This idea of finding a measure of progress is interesting, and even for this algorithm there are many measures you could propose that would not work. We need something that strictly increases in each iteration so quantities like the number of free individuals and the number of engaged pairs don't work since they can stay constant from one iteration to the next. There are still arguments that one could make with these quantities, but they won't fall through as easily as above to prove your upper bound on the max number of iterations.
+
+Next we establish that the set $$S$$ returned by the algorithm is indeed a perfect matching. Intuitively, we don't want a man to run out of women to propose to on his preference list. Observe that in the algorithm, the while loop terminates if for every man $$m$$, either $$m$$ is not free or $$m$$ has proposed to every woman. We want to prove that actually, the only way the while loop exits is when no free man exists, in which case we certainly know that no free woman could exist since the returned set is a matching in which every man is involved, resulting in a perfect matching (the returned set is a matching since only a free man can propose meaning a man could only be married to at most one woman and women always choose one man over others proposing to her, meaning a woman could only be married to at most one man). As it stands, we have not proved this and for all we know the while loop **could** exit with a free man that simply has proposed to every woman. So if we can prove the following, we are done via the above logic.
+
+{: .box-note}
+**Proposition 4:** If $$m$$ is free at some point in the execution of the algorithm, there is a woman to whom he has not yet proposed.
+
+**Proof**: For contradiction, suppose at some point there exists a man $$m$$ who is free and has proposed to every woman. By observation 1, all women are thus currently engaged to some man. The set of engaged pairs forms a matching (by the previous paragraph) amd there are $$n$$ women, so since in a matching nobody is allowed to have more than one partner, there must be at least $$n$$ engaged men. But there are only $$n$$ men total, and $$m$$ is free, so this is a contradiction.
+
+This proof might seem like overkill for such a simple idea but since this post contains my pedagogical opinions, dislpays the process of careful algorithm design and rigorous math, and is not written for a mathematical audience, it's important to be very careful. For example, for one of the previous paragraph sI could have simply said "Since we have a bipartite graph with parts $$U$$ and $$W$$ with $$|U| = |W|$$, it suffices to show that a matching saturates all of $$U$$", but that's neither instructive nor elucidating for certain audiences. This is a great way playground to start messing with combinatorial definitions and seeing how much precision needs to be involved.
+
+Now we can easily show that $$S$$ is a perfect matching.
+
+{: .box-note}
+**Proposition 5:** The returned set $$S$$ is a perfect matching. 
+
+**Proof:** The set of engaged pairs are always a matching. Suppose for contradiction that the algorithm returns with a free man $$m$$. $$m$$ must have proposed to every woman since this is required for termination given that $$m$$ is free, but this contradicts proposition 4 which states that there cannot exist a free man who has proposed to every woman. Thus the algorithm can never terminate with a free man and so the set of engaged pairs returned at termination, $$S$$, is a perfect matching.
+
+As stated above, we are eliminating the possibility of a free man at termination by squeezing the 2nd condition of while loop termination (the "if a man $$m$$ has proposed to every woman" part) by proving that if this happens, it must be the case that $$m$$ is also not free and therefore no free man escapes the algorithm. Which we then combine with the fact that the set of engaged pairs is always a matching to prove $$S$$ is a perfect matching. This precise progression of statements and observations are pretty neat when you slow down the pace and break it down as much as I have here (but probably infuriatingly slow for some readers).
+
+### Proving That $$S$$ is a Stable Matching 
+
+We've finally built up to the meat of proving the algorithm is correct, verifying that the set $$S$$ it returns is in fact a stable matching. With all the observations and propositions we've made leading up to this, the proof becomes much more straightforward. 
+
+Intuitively, no instability $$(m,w')$$ could exist with respect to $$S$$, because of the way that men propose in the algorithm. $$m$$ would have proposed to $$w'$$ before proposing to the partner that he ended up with, call her $$w$$, and thus $$w'$$ must have rejected him in favor of some man $$m''$$ because $$m$$ and $$w'$$ did not end up with each other. We don't know if she ended up with $$m''$$, but we do know that whoever she ended up with must have ranked higher than $$m''$$ (and consequently, higher than $$m$$) on the preference list of $$w'$$. Essentially, women are happy because the algorithm ensures they end up with the best partner that proposed to them during the execution of the algorithm, whereas men are stuck with the partners they end up with because every woman they prefer to their current partner must have rejected them in favor for somebody else at some point in time.
+
+{: .box-warning}
+**Theorem 6:** Consider an execution of the Gale-Shapley algorithm that returns a set of pairs $$S$$. Then $$S$$ is a stable matching.
+
+**Proof:** We already know that $$S$$ is a perfect matching due to observation 5 so we simply need to show that no instabilities with respect to $$S$$ exist. We assume there does exist an instability with respect to $$S$$ and derive a contradiction. Recall that such an instability involves two pairs $$(m,w)$$ and $$(m',w')$$ in $$S$$ with the properties that $$m$$ prefers $$w'$$ to $$w$$ and $$w'$$ prefers $$m$$ to $$m'$$. 
+
+In the execution of the algorithm that leads to producing set $$S$$, the last proposal $$m$$ made must have been to $$w$$ by definition. But $$m$$ must have proposed to $$w'$$ before he proposed to $$w$$, since $$m$$ prefers $$w'$$ to $$w$$. Therefore, he must have been rejected by $$w'$$ in favor of some other man $$m''$$. Because $$w'$$ ended up with $$m'$$ as a final partner, either $$m'' = m'$$ or by observation 1, $$w'$$ prefers $$m'$$ over $$m''$$. In either case, we know $$w'$$ prefers $$m'$$ over $$m$$, because there are no ties allowed in rankings (our ranking for men and women is a strict totally ordered relation), which contradicts the assumption that $$w'$$ prefers $$m$$ over $$m'$$. It now follows that $$S$$ is a stable matching.
+
+
+## Further Considerations
+We have just proven the big conclusion through a series of intermediate propositions and observations, but now we turn to some of the comments we made on those intermediate propositions themselves. They turn out to be just as interesting, if not more interesting, than this main theorem.
+
+### Life is Unfair
+
+Do you remember that example that was brought up where multiple stable matchings could exist? It was this example, where two stable matchings exist; $$(m,w)$$ and $$(m',w')$$ or $$(m,w')$$ and $$(m',w)$$. 
+
+| Person | Rank #1 | Rank #2 |
+| :------ |:--- | :--- |
+| $$m$$ | $$w$$ | $$w'$$ |
+| $$m'$$ | $$w'$$ | $$w$$ |
+| $$w$$ | $$m'$$ | $$m$$ |
+| $$w'$$ | $$m$$ | $$m'$$ |
+
+In any execution of the Gale-Shapley algorithm, $$m$$ will become engaged to $$w$$ and $$m'$$ will become engaged to $$w'$$ (in some order), and things just stop there. The other stable matching, where women are most happy, cannot be produced from any execution of the Gale-Shapley algorithm.
+This is strange, the last time we discussed "unfairness" and which gender ends up worse off it seemed like the men were getting screwed over by the algorithm but here we just said no execution of Gale-Shapley results in the desired result for women. I told you we would come back to this fairness phenomenon. The root of this unfairness is the fact that some stable matchings are not attainable with Gale-Shapley (and some others aren't attainable by any simple algorithms like Gale-Shapley at all).
+
+### But Why is Life Unfair?
+When and why does this occur? When the men's preferences mesh perfectly with each other (no two men have the same woman ranked first in their lists) then in every run of Gale-Shapley, every man will get their top preference without any regard to the womens' preferences. In the case where the womens' preferences completely clash with the mens', this is the worst case for the women. This example we just gave shows us that somebody is going to be unhappy in the world. Men are unhappy when women propose and women are unhappy when men propose. But this is only in the case where the men's preferences mesh together, not in general. How general is this phenomenon? 
+
+We begin answering this by looking at something I mentioned earlier; Gale-Shapley is underspecified and this is why we kept having to say "Consider an execution of Gale-Shapley that returns set $$S$$" instead of "Consider the set $$S$$ returned by Gale-Shapley". A very natural question is whether all executions of Gale-Shapley actually end up producing the same matching $$S$$. This is a very important type of question to ask in computer science: when we have an algorithm that involves independent components making different actions that interact with each other in complex ways, it's good to know how much variability can be caused in the final outcome of the algorithm from one run to another. In our case, we have a very nice answer; all executions of Gale-Shapley result in the same matching. This starts to spell doom for the women (or whichever party is not the proposer when you run the algorithm).
+
+#### It's All the Same
+
+
+### Possible Extensions
+There are many extensions, variants, etc. to this problem and we have just discussed the simplest one. Some other questions that come to mind is what if we allow some notion of collusion between one of the parties? We have seen that the men are favored in the Gale-Shapley algorithm, but what if the women were allowed to pool together and create preference lists to counteract the innate unfairness of Gale-Shapley? Surely something as strong as being able to look at another people's preference list would be able to pull the situation into the women's favor, right?
+
+## Concluding Thoughts
 The Stable Matching Problem nicely displays common themes in algorithm design and is rooted in practical concerns from which a learner must spend some effort to formulate the setup precisely enough to ask concrete questions. They are then forced think about algorithms to solve those questions, proving non-obvious properties about the structure of the problem along the way. This cuts to the heart of what algorithm design is and showcases both the rigor and precision of math combined with the ingenuinty and creative freedom of design.
 
-As in common in combinatorial problems, we considered discrete "moves" we could make and from there derived observations that were useful in studying properties about the underlying problem. We then used these properties and to eventually devise an algorithm and prove it works correclty.
+As is common in combinatorial problems, we considered discrete "moves" we could make and from there derived observations that were useful in studying properties about the underlying problem. We then used these properties and to eventually devise an efficient algorithm and prove it works correclty. But we continued onwards, analyzing the algorithm to prove some further properties about it and from there, asking questions related to these properties. How general are these properties, what would happen if we tweaked this part or introduced another notion into the problem? All this is part of the design aspect of algorithm design, and hopefully you can see the creativity and ongoing quest for knowledge.
+
+The Stable Matching Problem and Gale-Shapley are such rich breeding grounds for combinatorial reasoning, rigorous definitions and arguments, surprising results, interesting properties, cool extensions and even ventures quickly into unknown research problems. This one problem and the algorithm used to efficiently solve it opens up so much about the world of algorithm design.
