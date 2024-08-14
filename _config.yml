@@ -92,10 +92,10 @@ rss-description: Is an RSS feed really required for this blog?
 ###########################
 
 # Select which social network share links to show in posts
-#share-links-active:
-  #twitter: true
-  #facebook: true
-  #linkedin: true
+share-links-active:
+  twitter: false
+  facebook: false
+  linkedin: false
   #vk: false
 
 # How to display the link to your website in the footer
