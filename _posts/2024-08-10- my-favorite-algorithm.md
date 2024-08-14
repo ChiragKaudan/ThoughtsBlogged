@@ -2,7 +2,7 @@
 layout: post
 title: My Favorite Algorithm
 subtitle: The Gale-Shapley Algorithm as a brilliant example of the art of algorithm design 
-tags: [test]
+tags: [test, math]
 comments: true
 mathjax: true
 author: Chirag Kaudan
@@ -37,7 +37,7 @@ Consider the following scenario. Say one of the applicants, Ferdinand, accepts a
 
 Looking at it from the other perspective, we see a situation that could be even worse. Ferdinand's friend Vasco, who has just arranged to work at PioneerPathways, hears of Ferdinand's story and wants to do the same, and so he calls up GlobalVenture and tells them that he would much rather work for them instead of PioneerPathways. He is very convincing and upon further consideration, GlobalVenture realizes that they do actually prefer Vasco to some other applicant that is already scheduled to start working at GlobalVenture. If GlobalVenture were an unethical company (which might be tautological), they would consider finding some excuse to boot that applicant out and make an offer to Vasco instead. GlobalVenture and Vasco simultaneously screw over both some other applicant and PioneerPathways with one deal that neither the applicant nor PioneerPathways had any say in.
 
-_The theme here is that we want to avoid any deals from being made outside of the application system to prevent unfairness_. But applicants and especially companies will always act in self-interest, so we cannot stop these under-the-table deals from being made by simply relying on the honor system or trying to fruitlessly eliminate people from acting in self-interest. 
+The theme here is that we want to avoid any deals from being made outside of the application system to prevent unfairness. But applicants and especially companies will always act in self-interest, so we cannot stop these under-the-table deals from being made by simply relying on the honor system or trying to fruitlessly eliminate people from acting in self-interest. 
 
 What if we had a system where self-interest itself is what stops the outside deals from being made in the first place? We'd prefer a system where every applicant is happy with the company they get initial offers from or where every company extends offers to candidates they'd prefer over everybody else in the field. Such a system would be self-enforcing, because let's say an applicant who has arranged to work for GlobalVenture tries to be slick and make an outside deal with DiscoveryEnterprises, but then DiscoveryEnterprises can just say "Nope, we prefer every candidate we've extended offers to over you, sorry". Or if a company reaches out to its best applicants that ended up going somewhere else and getting the response "No, I like where I am" from each of them. No outside deals can be made, such a system is stable.
 
@@ -217,6 +217,9 @@ In our case, we have a very nice answer; all executions of Gale-Shapley result i
 
 #### It's All the Same
 
+There are several ways we could try to prove that every execution produces the same matching, but they get complicated very quickly. The cleanest way is to give a characterization of the matching obtained and then show that every execution results in the matching that has this characterization. Characterization is a term in math which means a set of conditions or properties for a mathematical object that differs from its definition but is logically equivalent to it (for example, a characterization of a rational number is this property "A number has a finite or repeating decimal expansion". The statement "A number is rational if and only if it has a finite or repeating decimal expansion" is true but the definition of a rational numbers is different, involving expressing the number as a ratio of two integers).
+
+What is this characterization? We will show that every man always ends up with the best possible partner (and not just in the special case where the men's preferences mesh).
 
 ### Possible Extensions
 There are many extensions, variants, etc. to this problem and we have just discussed the simplest one. Some other questions that come to mind is what if we allow some notion of collusion between one of the parties? We have seen that the men are favored in the Gale-Shapley algorithm, but what if the women were allowed to pool together and create preference lists to counteract the innate unfairness of Gale-Shapley? Surely something as strong as being able to look at another people's preference list would be able to pull the situation into the women's favor, right?
