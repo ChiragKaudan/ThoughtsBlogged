@@ -250,6 +250,8 @@ As stated before, this theorem means that for men, Gale-Shapley is ideal. The sa
 
 $$\tag*{$\blacksquare$}$$
 
+So there we have it. Our toy example of two men and two women that pointed to the bias where men's preferences meshed perfectly hinted to something more general. For any set of preferences going in as input to Gale-Shapley, the side that does the proposing comes out with the best possible stable matching from their perspective, and the side that does not do the proposing ends up with the worst possible outcome from their perspective.
+
 ### Possible Extensions
 There are many extensions, variants, etc. to this problem and we have just discussed the simplest one. Some other questions that come to mind is what if we allow some notion of collusion between one of the parties? We have seen that the men are favored in the Gale-Shapley algorithm, but what if the women were allowed to pool together and create preference lists to counteract the innate unfairness of Gale-Shapley? Surely something as strong as being able to look at another people's preference list would be able to pull the situation into the women's favor, right?
 
