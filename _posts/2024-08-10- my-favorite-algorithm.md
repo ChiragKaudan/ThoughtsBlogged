@@ -241,6 +241,15 @@ $$\tag*{$\blacksquare$}$$
 
 It also doesn't help  we place no assumptions at all on execution $$R$$, so we can freely use facts derived from execution $$R$$ to prove that in some other execution of Gale-Shapley that produces $$S'$$, there must be some contradiction. So there is added confusion where the reader may think we're jumping from execution to execution somehow carrying facts across executions. 
 
+As stated before, this theorem means that for men, Gale-Shapley is ideal. The same is not true for the women. We have analagous definitions for women: For a woman $$w$$, we say that $$m$$ is a valid partner of $$w$$ is there exists a stable matching containing the pair $$(m,w)$$. Define a _worst valid partner_ of $$w$$ as a valid partner of $$w$$ who she ranks lower than every other valid partner of hers.
+
+{: .box-note}
+**Proposition 8:** In the stable matching $$S*$$, each woman is married to her worst valid partner.
+
+**Proof:** We use a similar technique to prove this claim as the one above. Assume that there exists a stable matching $$S*$$ containing the pair $$(m,w)$$ where $$m$$ was not the worst valid partner of $$w$$. This means that there exists a stable matching $$S'$$ where $$w$$ is paired with some man $$m'$$ who is a valid partner of $$w$$ who she likes less than $$m$$. Then in $$S'$$, we have $$m$$ being paired with some woman $$w' \neq w$$, but this makes $$w'$$ a valid partner of $$m$$ and we know that $$w$$ is the best valid partner of $$m$$, so it follows that $$m$$ prefers $$w$$ over $$w'$$. By assumption, we know that $$w$$ prefers $$m$$ over $$m'$$ and so this creates the instability $$(m,w)$$ with respect to $$S'$$, contradicting the claim that $$S'$$ is stable and hence contradicting our initial assumption.
+
+$$\tag*{$\blacksquare$}$$
+
 ### Possible Extensions
 There are many extensions, variants, etc. to this problem and we have just discussed the simplest one. Some other questions that come to mind is what if we allow some notion of collusion between one of the parties? We have seen that the men are favored in the Gale-Shapley algorithm, but what if the women were allowed to pool together and create preference lists to counteract the innate unfairness of Gale-Shapley? Surely something as strong as being able to look at another people's preference list would be able to pull the situation into the women's favor, right?
 
