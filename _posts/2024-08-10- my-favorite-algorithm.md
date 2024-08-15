@@ -45,7 +45,7 @@ Formulated a bit more precisely, the question Gale and Shapley are asking is thi
 1. $$E$$ prefers every applicant they made an offer to over $$A$$
 2. $$A$$ prefers her current employer over $$E$$
 
-If these two conditions hold, the outcome will be stable. Gale and Shapley developed a neat solution to their question via an algorithm. 
+If this holds, the outcome will be stable. Gale and Shapley developed a neat solution to their question via an algorithm. 
 
 ## Problem Formulation
 
