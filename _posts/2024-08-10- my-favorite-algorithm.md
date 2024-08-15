@@ -2,7 +2,7 @@
 layout: post
 title: My Favorite Algorithm
 subtitle: The Gale-Shapley Algorithm as a brilliant example of the art of algorithm design 
-tags: [test, math]
+tags: [math]
 comments: true
 mathjax: true
 author: Chirag Kaudan
