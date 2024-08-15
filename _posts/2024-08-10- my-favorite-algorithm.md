@@ -219,7 +219,17 @@ In our case, we have a very nice answer; all executions of Gale-Shapley result i
 
 There are several ways we could try to prove that every execution produces the same matching, but they get complicated very quickly. The cleanest way is to give a characterization of the matching obtained and then show that every execution results in the matching that has this characterization. Characterization is a term in math which means a set of conditions or properties for a mathematical object that differs from its definition but is logically equivalent to it (for example, a characterization of a rational number is this property "A number has a finite or repeating decimal expansion". The statement "A number is rational if and only if it has a finite or repeating decimal expansion" is true but the definition of a rational numbers is different, involving expressing the number as a ratio of two integers).
 
-What is this characterization? We will show that every man always ends up with the best possible partner (and not just in the special case where the men's preferences mesh).
+What is this characterization? We will show that every man always ends up with the best possible partner (and not just in the special case where the men's preferences mesh). To make this more precise, here are some definitions. We say a woman $$w$$ is a _valid partner_ of a man $$m$$ if there is some stable matching which contains $$(m,w)$$. We say that $$w$$ is the _best valid partner_ of $$m$$, denoted $$best(m)$$ if $$w$$ is a valid partner of $$m$$ and no other woman that $$m$$ ranks higher than $$w$$ is a valid partner.
+
+Let $$S^*$$ denote the set \{ $$(m,best(m))  :  m \in M$$ \}, or the set of pairs where every man is paired with his best valid partner. The little colon in the set means "such that" or "with the property that" and is often used in this notation of describing sets.
+
+{: .box-warning}
+**Theorem 7:** Every execution of the Gale-Shapley algorithm results in the set $$S^*$$.
+
+You should be surprised at this claim, and not just in the sense of it not being immediately obvious. There are a few things about this claim that should warrant suspicion. Firstly, it's not clear that $$S^*$$ is even a matching in the first place; for examlpe, why can't two men have the same best valid partner? It also states every execution of the Gale-Shapley algorithm gives the best result possible for the men...that every man is simultaneously happy in that there was no way they could have done any better. Finally, it conclusively states that the order of proposals in the Gale-Shapley algorithm has no effect at all on the outcome. Let's prove it.
+
+**Proof:** 
+
 
 ### Possible Extensions
 There are many extensions, variants, etc. to this problem and we have just discussed the simplest one. Some other questions that come to mind is what if we allow some notion of collusion between one of the parties? We have seen that the men are favored in the Gale-Shapley algorithm, but what if the women were allowed to pool together and create preference lists to counteract the innate unfairness of Gale-Shapley? Surely something as strong as being able to look at another people's preference list would be able to pull the situation into the women's favor, right?
