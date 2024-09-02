@@ -8,5 +8,7 @@ My name is Chirag Kaudan, I'm a PhD student at Oregon State studying theoretical
 
 I like to think about things and most of my thoughts aren't very good, but sometimes I have the urge to share some select few thoughts that I think aren't horrible with other people. But they are far too long to read in paragraphs of text messages. So I created this blog, enjoy your time here!
 
+I also enjoy explaining technical stuff to people of varying technical backgrounds (school children, non-math adults, math undergrads, people that know more math than me, etc.) in ways such that each group can benefit. 
+
 
 
